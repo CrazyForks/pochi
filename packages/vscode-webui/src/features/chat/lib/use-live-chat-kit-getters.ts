@@ -11,8 +11,10 @@ import { useCallback } from "react";
 
 export function useLiveChatKitGetters({
   todos,
+  isSubTask = false,
 }: {
   todos: React.RefObject<Todo[] | undefined>;
+  isSubTask?: boolean;
 }) {
   const { toolset } = useMcp();
   const mcpToolSet = useLatest(toolset);
@@ -31,13 +33,23 @@ export function useLiveChatKitGetters({
           undefined;
       }
 
+      const envToReturn = isSubTask
+        ? {
+            ...environment,
+            info: {
+              ...environment.info,
+              customRules: undefined,
+            },
+          }
+        : environment;
+
       return {
         todos: todos.current,
-        ...environment,
+        ...envToReturn,
         userEdits,
       } satisfies Environment;
     },
-    [todos],
+    [todos, isSubTask],
   );
 
   return {

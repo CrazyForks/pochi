@@ -14,6 +14,8 @@ const toolDef = {
   description:
     `Create a task that can be executed autonomously by a runner in the same environment as the current task. When you are searching for a keyword or file and are not confident that you will find the right match in the first few tries, use the Agent tool to perform the search for you.
 
+Note: The sub-agent operates independently and does not inherit your custom instructions or rules. Keep the task description focused on the specific objective without referencing personal preferences or custom rules.
+
 Always include a reminder in your prompt to ensure the result will be submitted through the \`attemptCompletion\` tool.
 If the runner stops without submitting the result, it will return an error message.
 
