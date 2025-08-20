@@ -19,6 +19,12 @@ const isVSCodeEnvironment = () => {
   return false;
 };
 
+const isOtelEnabled = () => {
+  return (
+    typeof process !== "undefined" && !!process.env.OTEL_EXPORTER_OTLP_ENDPOINT
+  );
+};
+
 const mainLogger = new Logger({
   type: isVSCodeEnvironment() ? "hidden" : "pretty",
 });
@@ -56,6 +62,10 @@ function getPochiLogLevel() {
 }
 
 function parseLogMinLevelAndType(name: string) {
+  if (isOtelEnabled()) {
+    return 0;
+  }
+
   if (isVSCodeEnvironment()) {
     return 0;
   }
