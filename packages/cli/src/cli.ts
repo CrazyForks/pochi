@@ -245,12 +245,9 @@ function createLLMConfig({
     return {
       type: "google-vertex-tuning",
       modelId,
+      vertex: modelProvider.vertex,
       contextWindow: modelSetting.contextWindow,
       maxOutputTokens: modelSetting.maxTokens,
-      location: modelProvider.location,
-      credentials: modelProvider.credentials,
-      projectId: modelProvider.projectId,
-      accessToken: modelProvider.accessToken,
     };
   }
 

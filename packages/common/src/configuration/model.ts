@@ -45,21 +45,23 @@ const OpenAIModelSettings = BaseModelSettings.extend({
     .describe("API key for the model provider, if required."),
 });
 
+export const GoogleVertexModel = z.union([
+  z.object({
+    serviceAccountKey: z.string(),
+    location: z.string(),
+  }),
+  z.object({
+    accessToken: z.string(),
+    projectId: z.string(),
+    location: z.string(),
+  }),
+]);
+
+export type GoogleVertexModel = z.infer<typeof GoogleVertexModel>;
+
 const GoogleVertexTuningModelSettings = BaseModelSettings.extend({
   kind: z.literal("google-vertex-tuning"),
-  location: z.string().describe("Location of the model, e.g., us-central1"),
-  credentials: z
-    .string()
-    .optional()
-    .describe("Credentials for the vertex model."),
-  projectId: z.string().optional().describe("Project ID for the vertex model."),
-  accessToken: z
-    .string()
-    .optional()
-    .describe("Access token for the vertex model."),
-}).refine((data) => data.credentials || (data.projectId && data.accessToken), {
-  message:
-    "Either credentials or both projectId and accessToken must be provided.",
+  vertex: GoogleVertexModel,
 });
 
 const AiGatewayModelSettings = BaseModelSettings.extend({

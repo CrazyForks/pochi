@@ -118,24 +118,41 @@
                 "type": "string",
                 "const": "google-vertex-tuning"
               },
-              "location": {
-                "description": "Location of the model, e.g., us-central1",
-                "type": "string"
-              },
-              "credentials": {
-                "description": "Credentials for the vertex model.",
-                "type": "string"
-              },
-              "projectId": {
-                "description": "Project ID for the vertex model.",
-                "type": "string"
-              },
-              "accessToken": {
-                "description": "Access token for the vertex model.",
-                "type": "string"
+              "vertex": {
+                "anyOf": [
+                  {
+                    "type": "object",
+                    "properties": {
+                      "serviceAccountKey": {
+                        "type": "string"
+                      },
+                      "location": {
+                        "type": "string"
+                      }
+                    },
+                    "required": ["serviceAccountKey", "location"],
+                    "additionalProperties": false
+                  },
+                  {
+                    "type": "object",
+                    "properties": {
+                      "accessToken": {
+                        "type": "string"
+                      },
+                      "projectId": {
+                        "type": "string"
+                      },
+                      "location": {
+                        "type": "string"
+                      }
+                    },
+                    "required": ["accessToken", "projectId", "location"],
+                    "additionalProperties": false
+                  }
+                ]
               }
             },
-            "required": ["models", "kind", "location"],
+            "required": ["models", "kind", "vertex"],
             "additionalProperties": false
           },
           {
