@@ -103,11 +103,11 @@ async function ensureOutputSchema(
       model,
       schema,
       prompt: [
-        "The model is trying to generate object with following schema:",
+        "The model is trying to generate an object that conforms to the following schema:",
         JSON.stringify(z.toJSONSchema(schema)),
-        "Current input is",
+        "The current input is:",
         content,
-        "Please fix the inputs.",
+        "Please correct the input to match the schema. Ensure that all information from the original input is preserved in the corrected output.",
       ].join("\n"),
       maxRetries: 0,
     });
